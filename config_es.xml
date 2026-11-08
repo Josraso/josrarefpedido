@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>josrarefpedido</name>
+    <displayName><![CDATA[Referencia de pedido = ID]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Sustituye la referencia aleatoria de letras de los pedidos por el n&uacute;mero de pedido (ID).]]></description>
+    <author><![CDATA[Jose]]></author>
+    <tab><![CDATA[administration]]></tab>
+	<confirmUninstall><![CDATA[Los pedidos ya renumerados conservarán su referencia numérica. ¿Desinstalar?]]></confirmUninstall>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+</module>
