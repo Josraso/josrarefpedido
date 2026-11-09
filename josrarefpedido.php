@@ -11,6 +11,8 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+require_once dirname(__FILE__) . '/classes/JosrarefpedidoUpdater.php';
+
 class Josrarefpedido extends Module
 {
     const CFG_ENABLED = 'JOSRAREFPEDIDO_ENABLED';
@@ -32,7 +34,7 @@ class Josrarefpedido extends Module
     {
         $this->name = 'josrarefpedido';
         $this->tab = 'administration';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Jose';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -49,11 +51,15 @@ class Josrarefpedido extends Module
     {
         return parent::install()
             && $this->registerHook('actionValidateOrder')
+            && $this->getUpdater()->registerHooks()
             && Configuration::updateValue(self::CFG_ENABLED, 1);
     }
 
     public function uninstall()
     {
+        Configuration::deleteByName('JOSRAREFPEDIDO_UPD_TS');
+        Configuration::deleteByName('JOSRAREFPEDIDO_UPD_INFO');
+
         return Configuration::deleteByName(self::CFG_ENABLED)
             && parent::uninstall();
     }
@@ -176,9 +182,35 @@ class Josrarefpedido extends Module
         );
     }
 
+    /* ------------------------------------------------------------------ */
+    /* Actualizaciones                                                     */
+    /* ------------------------------------------------------------------ */
+
+    public function getUpdater()
+    {
+        return new JosrarefpedidoUpdater($this);
+    }
+
+    /**
+     * Aviso diario al servidor de actualizaciones (solo en el back-office).
+     */
+    public function hookActionAdminControllerSetMedia($params)
+    {
+        $this->getUpdater()->maybePing();
+    }
+
+    /**
+     * PS 8.1+: la versión nueva aparece en Módulos > Gestor de módulos > Actualizaciones.
+     */
+    public function hookActionListModules($params)
+    {
+        return $this->getUpdater()->getNativeModuleList();
+    }
+
     public function getContent()
     {
-        $output = '';
+        $updater = $this->getUpdater();
+        $output = $updater->processRequest();
 
         if (Tools::isSubmit('submitJosrarefpedidoConfig')) {
             Configuration::updateValue(self::CFG_ENABLED, (int) Tools::getValue(self::CFG_ENABLED));
@@ -192,7 +224,12 @@ class Josrarefpedido extends Module
             );
         }
 
-        return $output . $this->renderForm();
+        $info = $updater->getInfo();
+        $panel = $updater->renderPanel();
+
+        return !empty($info['update_available'])
+            ? $output . $panel . $this->renderForm()
+            : $output . $this->renderForm() . $panel;
     }
 
     private function renderForm()
