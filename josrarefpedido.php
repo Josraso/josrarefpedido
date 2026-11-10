@@ -34,7 +34,7 @@ class Josrarefpedido extends Module
     {
         $this->name = 'josrarefpedido';
         $this->tab = 'administration';
-        $this->version = '1.1.0';
+        $this->version = '1.1.1';
         $this->author = 'Jose';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -57,6 +57,9 @@ class Josrarefpedido extends Module
 
     public function uninstall()
     {
+        // Aviso al servidor de actualizaciones (no impide desinstalar si no responde)
+        $this->getUpdater()->notifyUninstall();
+
         Configuration::deleteByName('JOSRAREFPEDIDO_UPD_TS');
         Configuration::deleteByName('JOSRAREFPEDIDO_UPD_INFO');
 

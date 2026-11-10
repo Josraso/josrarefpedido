@@ -1,5 +1,8 @@
 # Changelog - josrarefpedido
 
+## 1.1.1 - 2026-11-11
+- Clave propia del módulo en el servidor de actualizaciones: ya no comparte clave con otros módulos. Además avisa al servidor cuando se desinstala y del resultado de cada actualización hecha desde la configuración (si falla, con el motivo). Sin cambios en el funcionamiento del módulo.
+
 ## 1.1.0
 - Avisos de actualización desde el servidor de actualizaciones (una vez al día, al entrar en el back-office).
 - En la configuración del módulo: comprobar actualizaciones y "Actualizar ahora" con copia de seguridad previa.
