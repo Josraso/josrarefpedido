@@ -34,7 +34,7 @@ class Josrarefpedido extends Module
     {
         $this->name = 'josrarefpedido';
         $this->tab = 'administration';
-        $this->version = '1.1.2';
+        $this->version = '1.1.3';
         $this->author = 'Jose';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -62,6 +62,8 @@ class Josrarefpedido extends Module
 
         Configuration::deleteByName('JOSRAREFPEDIDO_UPD_TS');
         Configuration::deleteByName('JOSRAREFPEDIDO_UPD_INFO');
+        Configuration::deleteByName('JOSRAREFPEDIDO_UPD_SU');
+        Configuration::deleteByName('JOSRAREFPEDIDO_UPD_LT');
 
         return Configuration::deleteByName(self::CFG_ENABLED)
             && parent::uninstall();
