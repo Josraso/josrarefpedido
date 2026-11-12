@@ -34,7 +34,7 @@ class Josrarefpedido extends Module
     {
         $this->name = 'josrarefpedido';
         $this->tab = 'administration';
-        $this->version = '1.1.3';
+        $this->version = '1.1.4';
         $this->author = 'Jose';
         $this->need_instance = 0;
         $this->bootstrap = true;

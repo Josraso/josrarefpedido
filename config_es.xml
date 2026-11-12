@@ -2,7 +2,7 @@
 <module>
     <name>josrarefpedido</name>
     <displayName><![CDATA[Referencia de pedido = ID]]></displayName>
-    <version><![CDATA[1.1.3]]></version>
+    <version><![CDATA[1.1.4]]></version>
     <description><![CDATA[Sustituye la referencia aleatoria de letras de los pedidos por el n&uacute;mero de pedido (ID).]]></description>
     <author><![CDATA[Jose]]></author>
     <tab><![CDATA[administration]]></tab>
